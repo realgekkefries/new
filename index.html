@@ -74,44 +74,6 @@
         .boombox {
             animation: beat 1s infinite ease-in-out;
         }
-
-        /* Audio control slider */
-        #audioControl {
-            position: absolute;
-            left: 20px;
-            bottom: 20px;
-            width: 300px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            z-index: 10;
-        }
-
-        #volumeSlider {
-            width: 100%;
-            cursor: pointer;
-            transition: background 0.3s ease;
-        }
-
-        #volumeSlider::-webkit-slider-runnable-track {
-            background: rgba(255, 255, 255, 0.5);
-            border-radius: 5px;
-            height: 10px;
-        }
-
-        #volumeSlider::-webkit-slider-thumb {
-            background: #E31C79;
-            border-radius: 50%;
-            height: 20px;
-            width: 20px;
-            border: none;
-            transition: transform 0.2s ease;
-        }
-
-        #volumeSlider::-webkit-slider-thumb:hover {
-            transform: scale(1.2);
-        }
-
     </style>
 </head>
 <body>
@@ -122,19 +84,13 @@
         <p class="whiteText">Raider</p>
     </div>
 
-    <audio id="backgroundAudio" src="./song.mp3" loop></audio>
-
-    <!-- Audio Control Slider -->
-    <div id="audioControl">
-        <input type="range" id="volumeSlider" min="0" max="1" step="0.01" value="0.5">
-    </div>
+    <audio id="backgroundAudio" src="./song.mp3" volume="0.7"></audio>
 
     <script>
         const blurLayer = document.getElementById('blurLayer');
         const enterButton = document.getElementById('enterButton');
         const raiderText = document.getElementById('raiderText');
         const backgroundAudio = document.getElementById('backgroundAudio');
-        const volumeSlider = document.getElementById('volumeSlider');
 
         let audioContext, analyser, dataArray;
 
@@ -159,13 +115,13 @@
             requestAnimationFrame(animateBoombox);
         }
 
-        // Handle enter button click
         enterButton.addEventListener('click', async () => {
             blurLayer.style.backdropFilter = 'none';
             enterButton.style.display = 'none';
             raiderText.style.display = 'block';
 
             try {
+                backgroundAudio.volume = 0.7; // Set volume to 70%
                 await backgroundAudio.play();
                 setupAudioVisualization();
 
@@ -177,29 +133,6 @@
             } catch (error) {
                 console.error('Audio playback failed:', error);
             }
-        });
-
-        // Volume control functionality
-        volumeSlider.addEventListener('input', () => {
-            backgroundAudio.volume = volumeSlider.value;
-        });
-
-        // Keep the slider at the correct time and prevent the song from restarting
-        volumeSlider.addEventListener('change', () => {
-            // No need to restart song, so no code here
-        });
-
-        // Seek functionality (forward and backward) - update slider
-        backgroundAudio.addEventListener('timeupdate', () => {
-            const currentTime = backgroundAudio.currentTime;
-            const duration = backgroundAudio.duration;
-            const progress = (currentTime / duration) * 100;
-            volumeSlider.value = progress;
-        });
-
-        volumeSlider.addEventListener('input', () => {
-            const newTime = (volumeSlider.value / 100) * backgroundAudio.duration;
-            backgroundAudio.currentTime = newTime;
         });
     </script>
 </body>
