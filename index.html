@@ -184,7 +184,12 @@
             backgroundAudio.volume = volumeSlider.value;
         });
 
-        // Seek functionality (forward and backward)
+        // Keep the slider at the correct time and prevent the song from restarting
+        volumeSlider.addEventListener('change', () => {
+            // No need to restart song, so no code here
+        });
+
+        // Seek functionality (forward and backward) - update slider
         backgroundAudio.addEventListener('timeupdate', () => {
             const currentTime = backgroundAudio.currentTime;
             const duration = backgroundAudio.duration;
@@ -199,4 +204,3 @@
     </script>
 </body>
 </html>
-
