@@ -74,6 +74,31 @@
         .boombox {
             animation: beat 1s infinite ease-in-out;
         }
+
+        #buttonContainer {
+            position: absolute;
+            top: 40%; /* Adjusted to place in the middle */
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 10;
+        }
+
+        .actionButton {
+            padding: 15px 30px;
+            background-color: rgba(216, 191, 255, 0.6); /* Light purple */
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.2em;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            transition: transform 0.2s ease;
+        }
+
+        .actionButton:hover {
+            transform: scale(1.1);
+        }
     </style>
 </head>
 <body>
@@ -82,6 +107,11 @@
     <div id="raiderText">
         <p class="redText">0x</p>
         <p class="whiteText">Raider</p>
+    </div>
+
+    <div id="buttonContainer">
+        <button class="actionButton" onclick="window.open('https://example.com', '_blank')">Download</button>
+        <!-- Add more buttons here as needed -->
     </div>
 
     <audio id="backgroundAudio" src="./song.mp3" volume="0.7"></audio>
@@ -137,3 +167,4 @@
     </script>
 </body>
 </html>
+
