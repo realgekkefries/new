@@ -82,11 +82,12 @@
             flex-direction: column;
             gap: 10px;
             z-index: 10;
+            visibility: hidden; /* Initially hide buttons */
         }
 
         .actionButton {
             padding: 15px 30px;
-            background-color: rgba(216, 191, 255, 0.6); /* Light purple */
+            background-color: rgba(216, 191, 255, 0.4); /* Slight light purple */
             color: white;
             border: none;
             border-radius: 10px;
@@ -121,6 +122,7 @@
         const enterButton = document.getElementById('enterButton');
         const raiderText = document.getElementById('raiderText');
         const backgroundAudio = document.getElementById('backgroundAudio');
+        const buttonContainer = document.getElementById('buttonContainer');
 
         let audioContext, analyser, dataArray;
 
@@ -150,6 +152,9 @@
             enterButton.style.display = 'none';
             raiderText.style.display = 'block';
 
+            // Show the buttons after Enter is clicked
+            buttonContainer.style.visibility = 'visible';
+
             try {
                 backgroundAudio.volume = 0.7; // Set volume to 70%
                 await backgroundAudio.play();
@@ -167,4 +172,3 @@
     </script>
 </body>
 </html>
-
