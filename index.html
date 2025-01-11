@@ -1,78 +1,118 @@
 <!DOCTYPE html>
 <html lang="en">
- <head>
-  <meta charset="utf-8"/>
-  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-  <title>
-   Not Enough Photons
-  </title>
-  <link href="styles/styles_index.css" rel="stylesheet"/>
-  <link href="img/ui/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
-  <link href="img/ui/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png"/>
-  <link href="img/ui/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png"/>
-  <link href="img/ui/site.webmanifest" rel="manifest"/>
-  <!-- Google search description -->
-  <meta content="Games, VR Mods, Gadgets, and more." name="description"/>
-  <!-- Discord embeds -->
-  <meta content="Not Enough Photons." property="og:title">
-   <meta content="Games, VR Mods, Gadgets, and Gizmos." property="og:description">
-    <meta content="https://notenoughphotons.dev/" property="og:url">
-     <meta content="https://notenoughphotons.dev/img/favicon.png" property="og:image"/>
-     <meta content="#010045" data-react-helmet="true" name="theme-color"/>
-    </meta>
-   </meta>
-  </meta>
- </head>
- <body>
-  <div class="tv-static">
-   <svg>
-    <filter id="noise">
-     <feturbulence id="turbulence">
-      <animate attributename="baseFrequency" dur="1s" repeatcount="indefinite" values="0.9 0.9;0.8 0.8;0.9 0.9;">
-      </animate>
-      "
-     </feturbulence>
-     <fedisplacementmap in="SourceGraphic" scale="60">
-     </fedisplacementmap>
-    </filter>
-   </svg>
-  </div>
-  <div class="main">
-   <div class="logo">
-    <p>
-     NOT
-    </p>
-    <p>
-     ENOUGH
-    </p>
-    <p>
-     <span style="color: red">
-      PHOTONS.
-     </span>
-    </p>
-   </div>
-   <div class="selections">
-    <div class="selection-button">
-     <a href="./about">
-      About
-     </a>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>0x Raider</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: url('background.jpg') no-repeat center center fixed;
+            background-size: cover;
+            filter: blur(8px);
+            transition: filter 1s ease;
+        }
+
+        #enterButton {
+            padding: 15px 30px;
+            font-size: 1.5em;
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        #enterButton:hover {
+            transform: scale(1.1);
+        }
+
+        #raiderText {
+            display: none;
+            text-align: center;
+            position: absolute;
+            font-family: Arial, sans-serif;
+        }
+
+        .redText {
+            color: red;
+            font-size: 4em;
+            margin: 0;
+        }
+
+        .whiteText {
+            color: white;
+            font-size: 5em;
+            font-weight: bold;
+            margin: 0;
+        }
+
+        @keyframes beat {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+        }
+
+        .boombox {
+            animation: beat 1s infinite ease-in-out;
+        }
+    </style>
+</head>
+<body>
+    <button id="enterButton">Enter</button>
+    <div id="raiderText">
+        <p class="redText">0x</p>
+        <p class="whiteText">Raider</p>
     </div>
-    <div class="selection-button">
-     <a href="./mods">
-      Mods
-     </a>
-    </div>
-    <div class="selection-button">
-     <a href="./games">
-      Games
-     </a>
-    </div>
-    <div class="selection-button">
-     <a href="./other">
-      Other
-     </a>
-    </div>
-   </div>
-  </div>
- </body>
+
+    <audio id="backgroundAudio" src="./song.mp3"></audio>
+
+    <script>
+        const body = document.body;
+        const enterButton = document.getElementById('enterButton');
+        const raiderText = document.getElementById('raiderText');
+        const backgroundAudio = document.getElementById('backgroundAudio');
+
+        let audioContext, analyser, dataArray;
+
+        function setupAudioVisualization() {
+            audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            const source = audioContext.createMediaElementSource(backgroundAudio);
+            analyser = audioContext.createAnalyser();
+            source.connect(analyser);
+            analyser.connect(audioContext.destination);
+            analyser.fftSize = 256;
+            dataArray = new Uint8Array(analyser.frequencyBinCount);
+
+            animateBoombox();
+        }
+
+        function animateBoombox() {
+            analyser.getByteFrequencyData(dataArray);
+            const average = dataArray.reduce((a, b) => a + b, 0) / dataArray.length;
+            const scale = 1 + average / 200;
+
+            raiderText.style.transform = `scale(${scale})`;
+            requestAnimationFrame(animateBoombox);
+        }
+
+        enterButton.addEventListener('click', () => {
+            body.style.filter = 'none';
+            enterButton.style.display = 'none';
+            raiderText.style.display = 'block';
+
+            backgroundAudio.play();
+            setupAudioVisualization();
+        });
+    </script>
+</body>
 </html>
+
