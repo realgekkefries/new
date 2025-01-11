@@ -110,7 +110,7 @@
             const average = dataArray.reduce((a, b) => a + b, 0) / dataArray.length;
             const scale = 1 + average / 200;
 
-            raiderText.style.transform = scale(${scale});
+            raiderText.style.transform = `scale(${scale})`;
             requestAnimationFrame(animateBoombox);
         }
 
@@ -135,3 +135,4 @@
     </script>
 </body>
 </html>
+
