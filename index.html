@@ -18,6 +18,8 @@
         }
 
         #enterButton {
+            position: absolute;
+            z-index: 10;
             padding: 15px 30px;
             font-size: 1.5em;
             background-color: rgba(0, 0, 0, 0.8);
@@ -104,15 +106,18 @@
             requestAnimationFrame(animateBoombox);
         }
 
-        enterButton.addEventListener('click', () => {
+        enterButton.addEventListener('click', async () => {
             body.style.filter = 'none';
             enterButton.style.display = 'none';
             raiderText.style.display = 'block';
 
-            backgroundAudio.play();
-            setupAudioVisualization();
+            try {
+                await backgroundAudio.play();
+                setupAudioVisualization();
+            } catch (error) {
+                console.error('Audio playback failed:', error);
+            }
         });
     </script>
 </body>
 </html>
-
