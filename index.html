@@ -46,8 +46,7 @@
             text-align: center;
             position: absolute;
             font-family: Arial, sans-serif;
-            transform-origin: center center;
-            transition: transform 2s ease;
+            transition: transform 1s ease-out;
         }
 
         .redText {
@@ -117,21 +116,16 @@
         }
 
         enterButton.addEventListener('click', async () => {
-            blurLayer.style.backdropFilter = 'none';
-            enterButton.style.display = 'none';
-            raiderText.style.display = 'block';
-
-            // Move the text to the left and tilt it
-            raiderText.style.transition = 'transform 2s ease';
-            raiderText.style.transform = 'translateX(-100px) rotateY(45deg)';
-
-            // After the animation, start the music and reset text position
+            // Move "0x Raider" text to the left
+            raiderText.style.transform = 'translateX(-100px)';
+            
+            // Wait for the transition to finish before starting the music
             setTimeout(async () => {
-                try {
-                    // Reset the text position
-                    raiderText.style.transition = 'transform 0.5s ease';
-                    raiderText.style.transform = 'translateX(0) rotateY(0)';
+                blurLayer.style.backdropFilter = 'none';
+                enterButton.style.display = 'none';
+                raiderText.style.display = 'block';
 
+                try {
                     await backgroundAudio.play();
                     setupAudioVisualization();
 
@@ -143,7 +137,10 @@
                 } catch (error) {
                     console.error('Audio playback failed:', error);
                 }
-            }, 2000); // Wait for the animation to finish before playing the music
+
+                // Apply animation to the "0x Raider" text
+                raiderText.classList.add('boombox');
+            }, 1000); // Wait for 1 second (match the text transition duration)
         });
     </script>
 </body>
