@@ -1,0 +1,116 @@
+@import url("styles_fonts.css");
+
+body {
+    overflow: hidden;
+    background-color: black;
+}
+
+.main {
+    animation: body-load forwards 6s cubic-bezier(0.16, 1, 0.3, 1);
+
+    filter: blur(10px);
+    position: absolute;
+    overflow: hidden;
+
+    width: 100%;
+    height: 101%;
+
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgb(2, 5, 14);
+
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo > p {
+    margin: auto;
+    font-family: "baukastenBold";
+    font-size: 3.5rem;
+    color: white;
+
+    filter:drop-shadow(0 0 0.1rem red);
+
+    user-select: none;
+}
+
+.logo > * {
+    animation: flash1-logo forwards 4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.light {
+    display: none;
+    z-index: 0;
+    position: relative;
+    width: 100px;
+    height: 100px;
+
+    transform: translate();
+    background-image: radial-gradient(circle at center, rgba(100, 100, 100, 255), rgba(25, 25, 25, 255));
+}
+
+.selections {
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.selection-button {
+    z-index: 10;
+    border-radius: 10px;
+    padding: 1px 1.5rem;
+    
+    mask-image: linear-gradient(white, white);
+    animation: flash1-selections forwards 5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.selection-button > a {
+    margin: auto;
+    font-family: "baukastenBook";
+    color: white;
+
+    text-align: center;
+
+    text-decoration: none;
+    user-select: none;
+}
+
+.selection-button > a:hover {
+    color: gray;
+}
+
+@keyframes flash1-logo {
+    from {
+        opacity: 0%;
+        filter: blur(25px);
+        transform: rotate(-15deg) scale(16, 16) translateX(200px)
+    }
+    to {
+        filter: blur(0px);
+    }
+}
+@keyframes flash1-selections {
+    from {
+        opacity: 0%;
+        filter: blur(10px);
+        transform: rotate(15deg) scale(4, 4) translateX(-200px)
+    }
+    to {
+        filter: blur(0px);
+    }
+}
+
+@keyframes body-load {
+    from {
+        filter: blur(10px);
+        opacity: 0%;
+    }
+    to {
+        filter: blur(0px);
+        opacity: 100%
+    }
+}
