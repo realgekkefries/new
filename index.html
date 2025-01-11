@@ -46,7 +46,7 @@
             text-align: center;
             position: absolute;
             font-family: Arial, sans-serif;
-            opacity: 0;
+            transition: transform 1s ease;
         }
 
         .redText {
@@ -73,23 +73,6 @@
 
         .boombox {
             animation: beat 1s infinite ease-in-out;
-        }
-
-        @keyframes moveLeftThenLift {
-            0% {
-                transform: translateX(0) rotateX(0deg);
-                opacity: 1;
-            }
-            50% {
-                transform: translateX(-30px) rotateX(0deg);
-            }
-            100% {
-                transform: translateX(-30px) rotateX(10deg) translateY(-10px);
-            }
-        }
-
-        .raiderMove {
-            animation: moveLeftThenLift 1s ease-in-out forwards;
         }
     </style>
 </head>
@@ -137,6 +120,10 @@
             enterButton.style.display = 'none';
             raiderText.style.display = 'block';
 
+            setTimeout(() => {
+                raiderText.style.transform = 'translateX(-50px)'; // Move text to the left after 0.7 seconds
+            }, 700);
+
             try {
                 await backgroundAudio.play();
                 setupAudioVisualization();
@@ -146,11 +133,6 @@
                         backgroundAudio.play();
                     }, 2000); // Restart audio after 2 seconds
                 });
-
-                // Trigger the animation for the text
-                setTimeout(() => {
-                    raiderText.classList.add('raiderMove');
-                }, 700); // Delay the animation by 0.7 seconds
             } catch (error) {
                 console.error('Audio playback failed:', error);
             }
