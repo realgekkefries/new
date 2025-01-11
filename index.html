@@ -11,10 +11,17 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            position: relative;
             background: url('background.jpg') no-repeat center center fixed;
             background-size: cover;
-            filter: blur(8px);
-            transition: filter 1s ease;
+        }
+
+        #blurLayer {
+            position: absolute;
+            inset: 0;
+            backdrop-filter: blur(8px);
+            transition: backdrop-filter 1s ease;
+            z-index: 5;
         }
 
         #enterButton {
@@ -69,6 +76,7 @@
     </style>
 </head>
 <body>
+    <div id="blurLayer"></div>
     <button id="enterButton">Enter</button>
     <div id="raiderText">
         <p class="redText">0x</p>
@@ -78,7 +86,7 @@
     <audio id="backgroundAudio" src="./song.mp3"></audio>
 
     <script>
-        const body = document.body;
+        const blurLayer = document.getElementById('blurLayer');
         const enterButton = document.getElementById('enterButton');
         const raiderText = document.getElementById('raiderText');
         const backgroundAudio = document.getElementById('backgroundAudio');
@@ -107,7 +115,7 @@
         }
 
         enterButton.addEventListener('click', async () => {
-            body.style.filter = 'none';
+            blurLayer.style.backdropFilter = 'none';
             enterButton.style.display = 'none';
             raiderText.style.display = 'block';
 
