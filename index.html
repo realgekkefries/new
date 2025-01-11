@@ -45,10 +45,8 @@
             display: none;
             text-align: center;
             position: absolute;
-            top: 10%; /* Adjust this value to move the text higher or lower */
-            left: 50%;
-            transform: translateX(-50%);
             font-family: Arial, sans-serif;
+            top: 20%; /* Moved higher */
         }
 
         .redText {
@@ -113,7 +111,7 @@
             const average = dataArray.reduce((a, b) => a + b, 0) / dataArray.length;
             const scale = 1 + average / 200;
 
-            raiderText.style.transform = scale(${scale});
+            raiderText.style.transform = `scale(${scale})`;
             requestAnimationFrame(animateBoombox);
         }
 
