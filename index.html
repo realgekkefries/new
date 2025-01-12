@@ -54,7 +54,7 @@
         .redText {
             color: red;
             font-size: 4em;
-            font-weight: bolder; /* Thicker "0x" text */
+            font-weight: bolder;
             margin: 0;
         }
 
@@ -118,8 +118,8 @@
             text-align: center;
         }
 
-        /* Text Above Counter Boxes */
-        .counterText {
+        /* Counter Labels */
+        .counterLabel {
             color: white;
             font-size: 1.2em;
             margin-bottom: 5px;
@@ -168,11 +168,11 @@
     </div>
 
     <!-- Counters Section -->
-    <div id="counterSection" style="position: absolute; top: 35%; text-align: center; z-index: 10; visibility: hidden; margin-top: 30px;">
-        <div class="counterText">Total Ran:</div>
-        <div class="counterBox" id="total-count">0</div>
-        <div class="counterText">Different PC's:</div>
-        <div class="counterBox" id="unique-count">0</div>
+    <div id="counterSection" style="position: absolute; top: 35%; text-align: center; z-index: 10; visibility: hidden;">
+        <div class="counterLabel">Total Ran</div>
+        <div class="counterBox" id="total-count">Total Ran: 0</div>
+        <div class="counterLabel">Different PC's</div>
+        <div class="counterBox" id="unique-count">Different PC's: 0</div>
     </div>
 
     <div id="buttonContainer">
@@ -182,7 +182,6 @@
         <button class="actionButton" id="featuresButton">
             <i class="fas fa-cogs"></i> Features
         </button>
-        <!-- New Discord Button -->
         <button class="actionButton" onclick="window.open('https://discord.gg/0xtool', '_blank')">
             <i class="fab fa-discord"></i> Discord
         </button>
@@ -255,7 +254,7 @@
             const average = dataArray.reduce((a, b) => a + b, 0) / dataArray.length;
             const scale = 1 + average / 200;
 
-            raiderText.style.transform = `scale(${scale})`;
+            raiderText.style.transform = scale(${scale});
             requestAnimationFrame(animateBoombox);
         }
 
@@ -312,7 +311,7 @@
             const tool = "0xRaider";
 
             try {
-                const totalResponse = await fetch(`${superballs}/get_total_ran`, {
+                const totalResponse = await fetch(${superballs}/get_total_ran, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ tool })
@@ -322,7 +321,7 @@
                     animateCounter(totalCountElement, totalData.count || 0);
                 }
 
-                const uniqueResponse = await fetch(`${superballs}/get_ran`, {
+                const uniqueResponse = await fetch(${superballs}/get_ran, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ tool })
@@ -333,8 +332,8 @@
                 }
             } catch (error) {
                 console.error("Error during fetch", error);
-                totalCountElement.textContent = `Error: ${error.message}`;
-                uniqueCountElement.textContent = `Error: ${error.message}`;
+                totalCountElement.textContent = Error: ${error.message};
+                uniqueCountElement.textContent = Error: ${error.message};
             }
         }
 
@@ -342,3 +341,4 @@
     </script>
 </body>
 </html>
+
