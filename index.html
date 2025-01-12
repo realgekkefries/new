@@ -104,16 +104,7 @@
             transform: scale(1.1);
         }
 
-        /* Counter Section */
-        #counterSection {
-            position: absolute;
-            top: 50%;
-            text-align: center;
-            z-index: 10;
-            visibility: hidden;
-            margin-top: 20px; /* Added spacing above the counters */
-        }
-
+        /* Counter Boxes */
         .counterBox {
             display: inline-block;
             padding: 15px 30px;
@@ -125,13 +116,6 @@
             margin: 10px;
             backdrop-filter: blur(10px);
             text-align: center;
-        }
-
-        .counterLabel {
-            font-size: 1em;
-            color: white;
-            margin-bottom: 5px;
-            display: block;
         }
 
         /* Info Popup */
@@ -177,15 +161,9 @@
     </div>
 
     <!-- Counters Section -->
-    <div id="counterSection">
-        <div>
-            <span class="counterLabel">Total Ran</span>
-            <div class="counterBox" id="total-count">0</div>
-        </div>
-        <div>
-            <span class="counterLabel">Different PCs</span>
-            <div class="counterBox" id="unique-count">0</div>
-        </div>
+    <div id="counterSection" style="position: absolute; top: 35%; text-align: center; z-index: 10; visibility: hidden;">
+        <div class="counterBox" id="total-count">Total Ran: 0</div>
+        <div class="counterBox" id="unique-count">Different PC's: 0</div>
     </div>
 
     <div id="buttonContainer">
@@ -195,6 +173,7 @@
         <button class="actionButton" id="featuresButton">
             <i class="fas fa-cogs"></i> Features
         </button>
+        <!-- New Discord Button -->
         <button class="actionButton" onclick="window.open('https://discord.gg/0xtool', '_blank')">
             <i class="fab fa-discord"></i> Discord
         </button>
@@ -208,13 +187,149 @@
             <li>Guild Joiner</li>
             <li>Guild Leaver</li>
             <li>VC Joiner</li>
-            <!-- Rest of the features... -->
+            <li>VC Leaver</li>
+            <li>Fetch Member IDs</li>
+            <li>Banner Changer</li>
+            <li>Nickname Changer</li>
+            <li>Bio Changer</li>
+            <li>Pronounce Changer</li>
+            <li>PFP Changer</li>
+            <li>Button Clicker</li>
+            <li>Reaction Adder</li>
+            <li>Rule Bypass</li>
+            <li>Onboarding Bypass</li>
+            <li>Restorecord Bypass</li>
+            <li>Token Formatter</li>
+            <li>Guild Info</li>
+            <li>User Info</li>
+            <li>Tokens Checker</li>
+            <li>IP Checker</li>
+            <li>Tokens Onliner</li>
+            <li>Message Spammer</li>
+            <li>Pin Spammer</li>
+            <li>Invite Spammer</li>
+            <li>Reply Spammer</li>
+            <li>Typing Spammer</li>
+            <li>Channel Thread Spam</li>
         </ul>
     </div>
 
     <audio id="backgroundAudio" src="./song.mp3" volume="0.7"></audio>
+
     <script>
-        // Your existing JavaScript remains unchanged
+        const blurLayer = document.getElementById('blurLayer');
+        const enterButton = document.getElementById('enterButton');
+        const raiderText = document.getElementById('raiderText');
+        const backgroundAudio = document.getElementById('backgroundAudio');
+        const buttonContainer = document.getElementById('buttonContainer');
+        const featuresButton = document.getElementById('featuresButton');
+        const infoPopup = document.getElementById('infoPopup');
+        const totalCountElement = document.getElementById('total-count');
+        const uniqueCountElement = document.getElementById('unique-count');
+
+        let audioContext, analyser, dataArray;
+
+        function setupAudioVisualization() {
+            audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            const source = audioContext.createMediaElementSource(backgroundAudio);
+            analyser = audioContext.createAnalyser();
+            source.connect(analyser);
+            analyser.connect(audioContext.destination);
+            analyser.fftSize = 256;
+            dataArray = new Uint8Array(analyser.frequencyBinCount);
+
+            animateBoombox();
+        }
+
+        function animateBoombox() {
+            analyser.getByteFrequencyData(dataArray);
+            const average = dataArray.reduce((a, b) => a + b, 0) / dataArray.length;
+            const scale = 1 + average / 200;
+
+            raiderText.style.transform = `scale(${scale})`;
+            requestAnimationFrame(animateBoombox);
+        }
+
+        function openPopup() {
+            infoPopup.style.display = 'block';
+        }
+
+        function closePopup() {
+            infoPopup.style.display = 'none';
+        }
+
+        enterButton.addEventListener('click', async () => {
+            blurLayer.style.backdropFilter = 'none';
+            enterButton.style.display = 'none';
+            raiderText.style.display = 'block';
+            document.getElementById('counterSection').style.visibility = 'visible';
+
+            // Show the buttons after Enter is clicked
+            buttonContainer.style.visibility = 'visible';
+
+            try {
+                backgroundAudio.volume = 0.4;
+                await backgroundAudio.play();
+                setupAudioVisualization();
+
+                backgroundAudio.addEventListener('ended', () => {
+                    setTimeout(() => {
+                        backgroundAudio.play();
+                    }, 2000); // Restart audio after 2 seconds
+                });
+            } catch (error) {
+                console.error('Audio playback failed:', error);
+            }
+        });
+
+        // Add event listener for the "Features" button to show the popup
+        featuresButton.addEventListener('click', openPopup);
+
+        function animateCounter(element, target) {
+            let count = 0;
+            const increment = Math.max(1, Math.floor(target / 50)); 
+            const interval = setInterval(() => {
+                count += increment;
+                if (count >= target) {
+                    count = target;
+                    clearInterval(interval);
+                }
+                element.textContent = count.toLocaleString();
+            }, 20);
+        }
+
+        async function fetchAndDisplayCounters() {
+            const superballs = "https://gekkefries.pythonanywhere.com";
+            const tool = "0xRaider";
+
+            try {
+                const totalResponse = await fetch(`${superballs}/get_total_ran`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ tool })
+                });
+                if (totalResponse.ok) {
+                    const totalData = await totalResponse.json();
+                    animateCounter(totalCountElement, totalData.count || 0);
+                }
+
+                const uniqueResponse = await fetch(`${superballs}/get_ran`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ tool })
+                });
+                if (uniqueResponse.ok) {
+                    const uniqueData = await uniqueResponse.json();
+                    animateCounter(uniqueCountElement, uniqueData.count || 0);
+                }
+            } catch (error) {
+                console.error("Error during fetch", error);
+                totalCountElement.textContent = `Error: ${error.message}`;
+                uniqueCountElement.textContent = `Error: ${error.message}`;
+            }
+        }
+
+        fetchAndDisplayCounters();
     </script>
 </body>
 </html>
