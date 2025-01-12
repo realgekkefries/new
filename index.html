@@ -118,6 +118,13 @@
             text-align: center;
         }
 
+        /* Text Above Counter Boxes */
+        .counterText {
+            color: white;
+            font-size: 1.2em;
+            margin-bottom: 5px;
+        }
+
         /* Info Popup */
         .info-popup {
             display: none;
@@ -161,9 +168,11 @@
     </div>
 
     <!-- Counters Section -->
-    <div id="counterSection" style="position: absolute; top: 35%; text-align: center; z-index: 10; visibility: hidden;">
-        <div class="counterBox" id="total-count">Total Ran: 0</div>
-        <div class="counterBox" id="unique-count">Different PC's: 0</div>
+    <div id="counterSection" style="position: absolute; top: 35%; text-align: center; z-index: 10; visibility: hidden; margin-top: 30px;">
+        <div class="counterText">Total Ran:</div>
+        <div class="counterBox" id="total-count">0</div>
+        <div class="counterText">Different PC's:</div>
+        <div class="counterBox" id="unique-count">0</div>
     </div>
 
     <div id="buttonContainer">
