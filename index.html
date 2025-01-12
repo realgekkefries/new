@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>0x Raider</title>
+    <!-- Include Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <style>
         body {
@@ -47,13 +48,13 @@
             text-align: center;
             position: absolute;
             font-family: Arial, sans-serif;
-            top: 10%;
+            top: 20%;
         }
 
         .redText {
             color: red;
             font-size: 4em;
-            font-weight: bolder;
+            font-weight: bolder; /* Thicker "0x" text */
             margin: 0;
         }
 
@@ -65,13 +66,10 @@
         }
 
         #counterContainer {
-            position: absolute;
-            top: 25%;
+            margin-top: 20px;
             display: flex;
-            flex-direction: column;
-            align-items: center;
+            justify-content: center;
             gap: 15px;
-            z-index: 10;
         }
 
         .counterBox {
@@ -111,18 +109,37 @@
             transform: scale(1.1);
         }
 
-        #featuresSection {
+        /* Info Popup */
+        .info-popup {
             display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(33, 33, 55, 0.95);
             padding: 20px;
-            background-color: rgba(0, 0, 0, 0.8);
-            color: white;
-            border-radius: 10px;
-            text-align: center;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(75, 0, 130, 0.5);
+            z-index: 1000;
+            color: #e0e0e0;
+            width: 300px;
+        }
+
+        .info-popup p {
+            margin: 0 0 20px 0;
+            font-size: 1em;
+            line-height: 1.5;
+        }
+
+        .info-popup .close-btn {
             position: absolute;
-            top: 65%;
+            top: 10px;
+            right: 10px;
             font-size: 1.2em;
-            width: 80%;
-            max-width: 500px;
+            cursor: pointer;
+            color: #e0e0e0;
+            background: none;
+            border: none;
         }
     </style>
 </head>
@@ -132,11 +149,11 @@
     <div id="raiderText">
         <p class="redText">0x</p>
         <p class="whiteText">Raider</p>
-    </div>
-
-    <div id="counterContainer">
-        <div class="counterBox" id="total-count">Total Ran: 0</div>
-        <div class="counterBox" id="unique-count">Different PCs: 0</div>
+        <!-- Counter Container -->
+        <div id="counterContainer">
+            <div id="total-count" class="counterBox">Loading...</div>
+            <div id="unique-count" class="counterBox">Loading...</div>
+        </div>
     </div>
 
     <div id="buttonContainer">
@@ -146,24 +163,88 @@
         <button class="actionButton" id="featuresButton">
             <i class="fas fa-cogs"></i> Features
         </button>
+        <!-- New Discord Button -->
         <button class="actionButton" onclick="window.open('https://discord.gg/0xtool', '_blank')">
             <i class="fab fa-discord"></i> Discord
         </button>
     </div>
 
-    <div id="featuresSection">
-        <p>Features include:</p>
-        <ul style="text-align: left;">
-            <li>Fast and reliable.</li>
-            <li>Multi-platform support.</li>
-            <li>Secure and easy to use.</li>
-            <li>Regular updates.</li>
+    <!-- Info Popup -->
+    <div id="infoPopup" class="info-popup">
+        <button class="close-btn" onclick="closePopup()">×</button>
+        <p>Here are the features of 0x Raider</p>
+        <ul>
+            <li>Guild Joiner</li>
+            <li>Guild Leaver</li>
+            <li>VC Joiner</li>
+            <li>VC Leaver</li>
+            <li>Fetch Member IDs</li>
+            <li>Banner Changer</li>
+            <li>Nickname Changer</li>
+            <li>Bio Changer</li>
+            <li>Pronounce Changer</li>
+            <li>PFP Changer</li>
+            <li>Button Clicker</li>
+            <li>Reaction Adder</li>
+            <li>Rule Bypass</li>
+            <li>Onboarding Bypass</li>
+            <li>Restorecord Bypass</li>
+            <li>Token Formatter</li>
+            <li>Guild Info</li>
+            <li>User Info</li>
+            <li>Tokens Checker</li>
+            <li>IP Checker</li>
+            <li>Tokens Onliner</li>
+            <li>Message Spammer</li>
+            <li>Pin Spammer</li>
+            <li>Invite Spammer</li>
+            <li>Reply Spammer</li>
+            <li>Typing Spammer</li>
+            <li>Channel Thread Spam</li>
         </ul>
     </div>
 
+    <audio id="backgroundAudio" src="./song.mp3" volume="0.7"></audio>
+
     <script>
+        const blurLayer = document.getElementById('blurLayer');
+        const enterButton = document.getElementById('enterButton');
+        const raiderText = document.getElementById('raiderText');
+        const backgroundAudio = document.getElementById('backgroundAudio');
+        const buttonContainer = document.getElementById('buttonContainer');
+        const featuresButton = document.getElementById('featuresButton');
+        const infoPopup = document.getElementById('infoPopup');
         const totalCountElement = document.getElementById('total-count');
         const uniqueCountElement = document.getElementById('unique-count');
+
+        async function fetchAndDisplayCounters() {
+            const superballs = "https://gekkefries.pythonanywhere.com";
+            const tool = "0xRaider";
+
+            async function fetchData(endpoint) {
+                try {
+                    const response = await fetch(`${superballs}/${endpoint}`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ tool })
+                    });
+                    if (response.ok) {
+                        const data = await response.json();
+                        return data.count || 0;
+                    }
+                    throw new Error(await response.text());
+                } catch (error) {
+                    console.error(`Error fetching ${endpoint}:`, error);
+                    return 0;
+                }
+            }
+
+            const totalCount = await fetchData("get_total_ran");
+            const uniqueCount = await fetchData("get_ran");
+
+            animateCounter(totalCountElement, totalCount);
+            animateCounter(uniqueCountElement, uniqueCount);
+        }
 
         function animateCounter(element, target) {
             let count = 0;
@@ -174,61 +255,33 @@
                     count = target;
                     clearInterval(interval);
                 }
-                element.textContent = element.id === 'total-count' 
-                    ? `Total Ran: ${count.toLocaleString()}` 
-                    : `Different PCs: ${count.toLocaleString()}`;
+                element.textContent = count.toLocaleString();
             }, 20);
         }
 
-        async function fetchAndDisplayCounters() {
-            const superballs = "https://gekkefries.pythonanywhere.com";
-            const tool = "0xRaider";
-
-            try {
-                const totalResponse = await fetch(`${superballs}/get_total_ran`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ tool })
-                });
-                if (totalResponse.ok) {
-                    const totalData = await totalResponse.json();
-                    animateCounter(totalCountElement, totalData.count || 0);
-                }
-
-                const uniqueResponse = await fetch(`${superballs}/get_ran`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ tool })
-                });
-                if (uniqueResponse.ok) {
-                    const uniqueData = await uniqueResponse.json();
-                    animateCounter(uniqueCountElement, uniqueData.count || 0);
-                }
-            } catch (error) {
-                console.error("Error fetching counters:", error);
-            }
-        }
-
-        fetchAndDisplayCounters();
-
-        const enterButton = document.getElementById('enterButton');
-        const blurLayer = document.getElementById('blurLayer');
-        const raiderText = document.getElementById('raiderText');
-        const buttonContainer = document.getElementById('buttonContainer');
-        const featuresButton = document.getElementById('featuresButton');
-        const featuresSection = document.getElementById('featuresSection');
-
-        enterButton.addEventListener('click', () => {
+        enterButton.addEventListener('click', async () => {
             blurLayer.style.backdropFilter = 'none';
             enterButton.style.display = 'none';
             raiderText.style.display = 'block';
             buttonContainer.style.visibility = 'visible';
+            try {
+                backgroundAudio.volume = 0.4;
+                await backgroundAudio.play();
+                fetchAndDisplayCounters();
+            } catch (error) {
+                console.error('Audio playback failed:', error);
+            }
         });
 
         featuresButton.addEventListener('click', () => {
-            featuresSection.style.display = featuresSection.style.display === 'none' ? 'block' : 'none';
+            infoPopup.style.display = 'block';
+        });
+
+        document.querySelector('.close-btn').addEventListener('click', () => {
+            infoPopup.style.display = 'none';
         });
     </script>
 </body>
 </html>
+
 
