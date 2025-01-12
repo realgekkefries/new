@@ -246,7 +246,7 @@
             const average = dataArray.reduce((a, b) => a + b, 0) / dataArray.length;
             const scale = 1 + average / 200;
 
-            raiderText.style.transform = scale(${scale});
+            raiderText.style.transform = `scale(${scale})`;
             requestAnimationFrame(animateBoombox);
         }
 
@@ -303,7 +303,7 @@
             const tool = "0xRaider";
 
             try {
-                const totalResponse = await fetch(${superballs}/get_total_ran, {
+                const totalResponse = await fetch(`${superballs}/get_total_ran`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ tool })
@@ -313,7 +313,7 @@
                     animateCounter(totalCountElement, totalData.count || 0);
                 }
 
-                const uniqueResponse = await fetch(${superballs}/get_ran, {
+                const uniqueResponse = await fetch(`${superballs}/get_ran`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ tool })
@@ -324,8 +324,8 @@
                 }
             } catch (error) {
                 console.error("Error during fetch", error);
-                totalCountElement.textContent = Error: ${error.message};
-                uniqueCountElement.textContent = Error: ${error.message};
+                totalCountElement.textContent = `Error: ${error.message}`;
+                uniqueCountElement.textContent = `Error: ${error.message}`;
             }
         }
 
