@@ -54,7 +54,7 @@
         .redText {
             color: red;
             font-size: 4em;
-            font-weight: bolder;
+            font-weight: bolder; /* Thicker "0x" text */
             margin: 0;
         }
 
@@ -80,7 +80,7 @@
 
         #buttonContainer {
             position: absolute;
-            top: 50%;
+            top: 40%;
             display: flex;
             flex-direction: column;
             gap: 10px;
@@ -118,7 +118,7 @@
             text-align: center;
         }
 
-        /* Counter Labels */
+        /* Labels for counters */
         .counterLabel {
             font-size: 1.2em;
             color: white;
@@ -169,9 +169,9 @@
 
     <!-- Counters Section -->
     <div id="counterSection" style="position: absolute; top: 35%; text-align: center; z-index: 10; visibility: hidden;">
-        <div class="counterLabel">Total Ran</div>
+        <div class="counterLabel">Total Ran:</div>
         <div class="counterBox" id="total-count">0</div>
-        <div class="counterLabel">Different PC's</div>
+        <div class="counterLabel">Different PC's:</div>
         <div class="counterBox" id="unique-count">0</div>
     </div>
 
@@ -342,3 +342,4 @@
     </script>
 </body>
 </html>
+
