@@ -66,21 +66,33 @@
         }
 
         #counterContainer {
-            margin-top: 15px;
+            margin-top: 10px; /* Reduced spacing */
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 8px; /* Tighter gap between label and counter box */
+        }
+
+        #counterLabels {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            font-size: 1.2em;
+            color: white;
+            margin-bottom: 5px; /* Label spacing from counters */
         }
 
         .counterLabel {
-            color: white;
-            font-size: 1.2em;
-            font-weight: bold;
+            text-align: center;
+        }
+
+        #counters {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
         }
 
         .counterBox {
-            padding: 10px 20px;
+            padding: 15px 30px;
             background-color: rgba(216, 191, 255, 0.4);
             color: white;
             border: none;
@@ -92,7 +104,7 @@
 
         #buttonContainer {
             position: absolute;
-            top: 55%; /* Adjusted closer to the counters */
+            top: 53%; /* Adjusted to reduce spacing from counters */
             display: flex;
             flex-direction: column;
             gap: 10px;
@@ -158,12 +170,14 @@
         <p class="whiteText">Raider</p>
         <!-- Counter Container -->
         <div id="counterContainer">
-            <div>
-                <p class="counterLabel">Total Ran</p>
-                <div id="total-count" class="counterBox">Loading...</div>
+            <!-- Counter Labels -->
+            <div id="counterLabels">
+                <span class="counterLabel">Total Ran</span>
+                <span class="counterLabel">Different PCs</span>
             </div>
-            <div>
-                <p class="counterLabel">Different PC's</p>
+            <!-- Counters -->
+            <div id="counters">
+                <div id="total-count" class="counterBox">Loading...</div>
                 <div id="unique-count" class="counterBox">Loading...</div>
             </div>
         </div>
@@ -176,44 +190,22 @@
         <button class="actionButton" id="featuresButton">
             <i class="fas fa-cogs"></i> Features
         </button>
-        <!-- New Discord Button -->
         <button class="actionButton" onclick="window.open('https://discord.gg/0xtool', '_blank')">
             <i class="fab fa-discord"></i> Discord
         </button>
     </div>
 
-    <!-- Info Popup -->
     <div id="infoPopup" class="info-popup">
         <button class="close-btn" onclick="closePopup()">×</button>
         <p>Here are the features of 0x Raider</p>
         <ul>
+            <!-- Feature list -->
             <li>Guild Joiner</li>
             <li>Guild Leaver</li>
             <li>VC Joiner</li>
             <li>VC Leaver</li>
             <li>Fetch Member IDs</li>
-            <li>Banner Changer</li>
-            <li>Nickname Changer</li>
-            <li>Bio Changer</li>
-            <li>Pronounce Changer</li>
-            <li>PFP Changer</li>
-            <li>Button Clicker</li>
-            <li>Reaction Adder</li>
-            <li>Rule Bypass</li>
-            <li>Onboarding Bypass</li>
-            <li>Restorecord Bypass</li>
-            <li>Token Formatter</li>
-            <li>Guild Info</li>
-            <li>User Info</li>
-            <li>Tokens Checker</li>
-            <li>IP Checker</li>
-            <li>Tokens Onliner</li>
-            <li>Message Spammer</li>
-            <li>Pin Spammer</li>
-            <li>Invite Spammer</li>
-            <li>Reply Spammer</li>
-            <li>Typing Spammer</li>
-            <li>Channel Thread Spam</li>
+            <!-- Add more features as necessary -->
         </ul>
     </div>
 
@@ -225,8 +217,6 @@
         const raiderText = document.getElementById('raiderText');
         const backgroundAudio = document.getElementById('backgroundAudio');
         const buttonContainer = document.getElementById('buttonContainer');
-        const featuresButton = document.getElementById('featuresButton');
-        const infoPopup = document.getElementById('infoPopup');
         const totalCountElement = document.getElementById('total-count');
         const uniqueCountElement = document.getElementById('unique-count');
 
@@ -285,15 +275,8 @@
                 console.error('Audio playback failed:', error);
             }
         });
-
-        featuresButton.addEventListener('click', () => {
-            infoPopup.style.display = 'block';
-        });
-
-        document.querySelector('.close-btn').addEventListener('click', () => {
-            infoPopup.style.display = 'none';
-        });
     </script>
 </body>
 </html>
+
 
