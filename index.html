@@ -66,14 +66,21 @@
         }
 
         #counterContainer {
-            margin-top: 20px;
+            margin-top: 15px;
             display: flex;
-            justify-content: center;
-            gap: 15px;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px; /* Tighter gap between label and counter box */
+        }
+
+        .counterLabel {
+            color: white;
+            font-size: 1.2em;
+            font-weight: bold;
         }
 
         .counterBox {
-            padding: 15px 30px;
+            padding: 10px 20px;
             background-color: rgba(216, 191, 255, 0.4);
             color: white;
             border: none;
@@ -85,7 +92,7 @@
 
         #buttonContainer {
             position: absolute;
-            top: 50%;
+            top: 55%; /* Adjusted closer to the counters */
             display: flex;
             flex-direction: column;
             gap: 10px;
@@ -151,8 +158,14 @@
         <p class="whiteText">Raider</p>
         <!-- Counter Container -->
         <div id="counterContainer">
-            <div id="total-count" class="counterBox">Loading...</div>
-            <div id="unique-count" class="counterBox">Loading...</div>
+            <div>
+                <p class="counterLabel">Total Ran</p>
+                <div id="total-count" class="counterBox">Loading...</div>
+            </div>
+            <div>
+                <p class="counterLabel">Different PC's</p>
+                <div id="unique-count" class="counterBox">Loading...</div>
+            </div>
         </div>
     </div>
 
@@ -283,5 +296,4 @@
     </script>
 </body>
 </html>
-
 
