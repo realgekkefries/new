@@ -77,12 +77,17 @@
             animation: beat 1s infinite ease-in-out;
         }
 
+        /* Gap Size for the Buttons and Counters */
+        :root {
+            --gap-size: 10px; /* Adjust this value to change the gap between buttons and counters */
+        }
+
         #buttonContainer {
             position: absolute;
             top: 60%;
             display: flex;
             flex-direction: column;
-            gap: 10px; /* Adjust gap here */
+            gap: var(--gap-size); /* Uses gap size from the root variable */
             z-index: 10;
             visibility: hidden;
         }
@@ -109,7 +114,7 @@
             top: 35%;
             display: flex; /* Make the section a flex container */
             justify-content: center; /* Center the counters horizontally */
-            gap: 10px; /* Adjust gap here for smaller space between counters */
+            gap: var(--gap-size); /* Uses gap size from the root variable */
             z-index: 10;
             visibility: hidden;
         }
