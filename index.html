@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>0x Raider</title>
-    <!-- Include Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <style>
         body {
@@ -54,7 +53,7 @@
         .redText {
             color: red;
             font-size: 4em;
-            font-weight: bolder; /* Thicker "0x" text */
+            font-weight: bolder;
             margin: 0;
         }
 
@@ -105,15 +104,23 @@
         }
 
         /* Counter Boxes */
+        #counterSection {
+            position: absolute;
+            top: 35%;
+            display: flex; /* Make the section a flex container */
+            justify-content: center; /* Center the counters horizontally */
+            gap: 30px; /* Add some space between counters */
+            z-index: 10;
+            visibility: hidden;
+        }
+
         .counterBox {
-            display: inline-block;
             padding: 15px 30px;
             background-color: rgba(216, 191, 255, 0.4);
             color: white;
             border: none;
             border-radius: 10px;
             font-size: 1.2em;
-            margin: 15px;
             backdrop-filter: blur(10px);
             text-align: center;
         }
@@ -167,11 +174,15 @@
     </div>
 
     <!-- Counters Section -->
-    <div id="counterSection" style="position: absolute; top: 35%; text-align: center; z-index: 10; visibility: hidden;">
-        <div class="counterLabel">Total Ran</div>
-        <div class="counterBox" id="total-count">0</div>
-        <div class="counterLabel">Different PC's</div>
-        <div class="counterBox" id="unique-count">0</div>
+    <div id="counterSection">
+        <div>
+            <div class="counterLabel">Total Ran</div>
+            <div class="counterBox" id="total-count">0</div>
+        </div>
+        <div>
+            <div class="counterLabel">Different PC's</div>
+            <div class="counterBox" id="unique-count">0</div>
+        </div>
     </div>
 
     <div id="buttonContainer">
@@ -181,13 +192,11 @@
         <button class="actionButton" id="featuresButton">
             <i class="fas fa-cogs"></i> Features
         </button>
-        <!-- New Discord Button -->
         <button class="actionButton" onclick="window.open('https://discord.gg/0xtool', '_blank')">
             <i class="fab fa-discord"></i> Discord
         </button>
     </div>
 
-    <!-- Info Popup -->
     <div id="infoPopup" class="info-popup">
         <button class="close-btn" onclick="closePopup()">×</button>
         <p>Here are the features of 0x Raider</p>
@@ -272,7 +281,6 @@
             raiderText.style.display = 'block';
             document.getElementById('counterSection').style.visibility = 'visible';
 
-            // Show the buttons after Enter is clicked
             buttonContainer.style.visibility = 'visible';
 
             try {
@@ -283,14 +291,13 @@
                 backgroundAudio.addEventListener('ended', () => {
                     setTimeout(() => {
                         backgroundAudio.play();
-                    }, 2000); // Restart audio after 2 seconds
+                    }, 2000); 
                 });
             } catch (error) {
                 console.error('Audio playback failed:', error);
             }
         });
 
-        // Add event listener for the "Features" button to show the popup
         featuresButton.addEventListener('click', openPopup);
 
         function animateCounter(element, target) {
@@ -341,3 +348,4 @@
     </script>
 </body>
 </html>
+
