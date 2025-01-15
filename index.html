@@ -48,6 +48,7 @@
             position: absolute;
             font-family: Arial, sans-serif;
             top: 20%;
+            width: 100%;
         }
 
         .redText {
@@ -79,12 +80,14 @@
 
         #buttonContainer {
             position: absolute;
-            top: 45%;  /* Adjusted this to move it closer to counters */
+            top: 50%;  /* Adjusted for responsiveness */
             display: flex;
             flex-direction: column;
             gap: 15px;
             z-index: 10;
             visibility: hidden;
+            width: 100%;
+            align-items: center;
         }
 
         .actionButton {
@@ -97,6 +100,8 @@
             cursor: pointer;
             backdrop-filter: blur(10px);
             transition: transform 0.2s ease;
+            width: 80%; /* Adjust the button width for responsiveness */
+            max-width: 300px; /* Max width to prevent buttons from getting too large */
         }
 
         .actionButton:hover {
@@ -107,11 +112,13 @@
         #counterSection {
             position: absolute;
             top: 35%;
-            display: flex; /* Make the section a flex container */
-            justify-content: center; /* Center the counters horizontally */
-            gap: 30px; /* Add some space between counters */
+            display: flex;
+            justify-content: center;
+            gap: 30px;
             z-index: 10;
             visibility: hidden;
+            width: 100%;
+            max-width: 800px;
         }
 
         .counterBox {
@@ -123,6 +130,8 @@
             font-size: 1.2em;
             backdrop-filter: blur(10px);
             text-align: center;
+            width: 100%;
+            max-width: 200px;
         }
 
         .counterLabel {
@@ -162,6 +171,49 @@
             color: #e0e0e0;
             background: none;
             border: none;
+        }
+
+        /* Media Queries for responsiveness */
+        @media (max-width: 768px) {
+            .actionButton {
+                font-size: 1em;
+                padding: 12px 25px;
+                width: 90%;
+            }
+
+            .counterBox {
+                font-size: 1em;
+                width: 90%;
+            }
+
+            #raiderText .redText {
+                font-size: 3em;
+            }
+
+            #raiderText .whiteText {
+                font-size: 4em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .actionButton {
+                font-size: 0.9em;
+                padding: 10px 20px;
+                width: 100%;
+            }
+
+            .counterBox {
+                font-size: 0.9em;
+                width: 100%;
+            }
+
+            #raiderText .redText {
+                font-size: 2.5em;
+            }
+
+            #raiderText .whiteText {
+                font-size: 3em;
+            }
         }
     </style>
 </head>
